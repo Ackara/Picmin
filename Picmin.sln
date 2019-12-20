@@ -5,7 +5,17 @@ VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Picmin", "src\Picmin\Picmin.csproj", "{F9A226D2-240F-43B2-ACF4-3D9187D52D21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Picmin.MSTest", "tests\Picmin.MSTest\Picmin.MSTest.csproj", "{733DC42D-2CEB-4359-9FCF-9C2BCB278973}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Picmin.MSTest", "tests\Picmin.MSTest\Picmin.MSTest.csproj", "{733DC42D-2CEB-4359-9FCF-9C2BCB278973}"
+EndProject
+Project("{F5034706-568F-408A-B7B3-4D38C6DB8A32}") = "build", "build\build.pssproj", "{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".misc", ".misc", "{C9B7ADF0-0252-423B-BD49-C5EB49BA63C6}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		changelog.md = changelog.md
+		commands.json = commands.json
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +31,10 @@ Global
 		{733DC42D-2CEB-4359-9FCF-9C2BCB278973}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{733DC42D-2CEB-4359-9FCF-9C2BCB278973}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{733DC42D-2CEB-4359-9FCF-9C2BCB278973}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
