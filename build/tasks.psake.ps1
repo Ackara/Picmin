@@ -93,6 +93,24 @@ Task "Run Tests" -alias "test" -description "This task invoke all tests within t
 Task "Run Benchmarks" -alias "benchmark" -description "This task invoke all benchmark tests within the 'tests' folder." `
 -action { $projectFile = Join-Path $SolutionFolder "tests/*.Benchmark/*.*proj" | Get-Item | Invoke-BenchmarkDotNet -Filter $Filter -DryRun:$DryRun; }
 
+Task "Download Binary Dependencies" -alias "bin" -description "This task downloads all required image compression tools if missing." `
+-action {
+	[string]$rootFolder = Join-Path $SolutionFolder "src/$SolutionName\compression-tools";
+	if (-not (Test-Path $rootFolder)) { New-Item $rootFolder -ItemType Directory | Out-Null; }
+	[string]$tmp = Join-Path ([IO.Path]::GetTempPath()) "download.zip";
+	
+	[string]$pingo = Join-Path $rootFolder "pingo-win.exe";
+	if (-not (Test-Path $pingo))
+	{
+		$tmp = Join-Path $rootFolder "pingo-win.zip";
+		if (Test-Path $tmp) { Remove-Item $tmp -Force; }
+		Invoke-WebRequest -Uri "https://css-ig.net/bin/pingo-win64.zip" -OutFile $tmp;
+		#Expand-Archive -Path $tmp -DestinationPath $rootFolder;
+	}
+
+
+}
+
 #endregion
 
 #region ----- PUBLISHING -----------------------------------------------

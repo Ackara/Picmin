@@ -6,7 +6,7 @@ namespace Acklann.Picmin
 {
 	internal static partial class Sample
 	{
-		public const string FOLDER_NAME = "samples";
+		public const string FOLDER_NAME = "sample-data";
 
 		public static string DirectoryPath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, FOLDER_NAME);
 		

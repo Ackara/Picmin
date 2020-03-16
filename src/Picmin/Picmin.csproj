@@ -1,8 +1,27 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Acklann.Picmin</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Label="NuGet">
+    <Title></Title>
+  </PropertyGroup>
+
+  <ItemGroup Label="Compression Tools">
+    <EmbeddedResource Include="..\..\lib\pingo-win.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>false</Visible>
+    </EmbeddedResource>
+
+    <EmbeddedResource Include="..\..\lib\pingo-linux.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>false</Visible>
+    </EmbeddedResource>
+
+    <EmbeddedResource Include="..\..\lib\pngquant-win.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>false</Visible>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>

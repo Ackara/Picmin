@@ -1,0 +1,16 @@
+{
+  "picmin":
+  [
+    {
+      "name": "all",
+      "sourceFiles":
+      [
+        "*.png"
+      ],
+      "compressor":
+      {
+
+      }
+    }
+  ]
+}

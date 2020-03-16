@@ -2,10 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-
-    <IsPackable>false</IsPackable>
-
     <RootNamespace>Acklann.Picmin</RootNamespace>
+    <IsPackable>false</IsPackable>
+    <Optimize>false</Optimize>
   </PropertyGroup>
 
   <ItemGroup>
@@ -30,34 +29,34 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Sample.cs</LastGenOutput>
     </None>
-    <None Update="samples\img1A.gif">
+    <None Update="sample-data\img1A.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="samples\img2.bmp">
+    <None Update="sample-data\img2.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="samples\img3.gif">
+    <None Update="sample-data\img3.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="samples\img4.ico">
+    <None Update="sample-data\img4.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="samples\img5.png">
+    <None Update="sample-data\img5.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="samples\lvl2\img10.png">
+    <None Update="sample-data\lvl2\img10.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="samples\lvl2\img6.tif">
+    <None Update="sample-data\lvl2\img6.tif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="samples\lvl2\img7.svg">
+    <None Update="sample-data\lvl2\img7.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="samples\lvl2\img8.jpg">
+    <None Update="sample-data\lvl2\img8.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="samples\lvl2\img9.jpg">
+    <None Update="sample-data\lvl2\img9.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -72,5 +71,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Sample.tt</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Tests\approved-folder\" />
   </ItemGroup>
 </Project>

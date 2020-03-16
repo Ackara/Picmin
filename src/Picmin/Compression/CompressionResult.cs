@@ -1,19 +1,22 @@
 using System;
 
-namespace Acklann.Picmin
+namespace Acklann.Picmin.Compression
 {
     public readonly struct CompressionResult
     {
-        public CompressionResult(bool success, string sourceFile, string outFile, long originalSize, long newSize, long ticks, string message = default)
+        public CompressionResult(string tool, bool success, string sourceFile, string outFile, long originalSize, long newSize, long ticks, string message = default)
         {
+            Tool = tool;
             SourceFile = sourceFile;
-            OuputFile = outFile;
             OriginalSize = originalSize;
+            OuputFile = outFile;
             NewSize = newSize;
             Elapse = TimeSpan.FromTicks(ticks);
             Success = success;
             Message = message;
         }
+
+        public readonly string Tool;
 
         public readonly string Message;
 
