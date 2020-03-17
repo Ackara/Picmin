@@ -24,4 +24,9 @@
       <Visible>false</Visible>
     </EmbeddedResource>
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Acklann.GlobN" Version="2.1.7" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
 </Project>

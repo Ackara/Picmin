@@ -1,5 +1,5 @@
 {
-  "picmin":
+  "images":
   [
     {
       "name": "all",
@@ -9,7 +9,8 @@
       ],
       "compressor":
       {
-
+        "quality": 80,
+        "removeMetadata": true
       }
     }
   ]
