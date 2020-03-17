@@ -23,11 +23,26 @@ namespace Acklann.Picmin.Configuration
 
         }
 
+        public static void Run(string configurationFilePath, string jpath = default)
+        {
+            if (!File.Exists(configurationFilePath)) throw new FileNotFoundException($"Could not find file at '{configurationFilePath}'.");
+
+            foreach (var item in Parse(configurationFilePath, jpath))
+            {
+                switch (item)
+                {
+                    case ICompressionOptions compressor:
+                        
+                        break;
+                }
+            }
+        }
+
         #region Backing Members
 
         private const string ROOT_JPATH = "$.images";
 
-        internal static void foo(string configurationFilePath, string jpath = default)
+        public static IEnumerable<object> Parse(string configurationFilePath, string jpath = default)
         {
             if (!File.Exists(configurationFilePath)) throw new FileNotFoundException($"Could not find file at '{configurationFilePath}'.");
 
@@ -38,8 +53,11 @@ namespace Acklann.Picmin.Configuration
             {
                 token = token.SelectToken(jpath ?? ROOT_JPATH);
                 if (token.Type == JTokenType.Array) config = (JArray)token;
-                else return;
+                else yield break;
             }
+
+            foreach (ICompressionOptions item in GetCompressionOptions(config))
+                yield return item;
         }
 
         private static IEnumerable<ICompressionOptions> GetCompressionOptions(JArray configuration)

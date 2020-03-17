@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.IO;
+using Acklann.Picmin.Configuration;
 
 namespace Acklann.Picmin.Tests
 {
@@ -23,9 +24,17 @@ namespace Acklann.Picmin.Tests
 		}
 
 		[TestMethod]
-		public void Method1()
+		public void Can_parse_batch_file()
 		{
+			// Arrange
+			var sampleImage = Sample.GetFullConfigJSON().FullName;
+
+			// Act
 			
+
+
+			// Assert
+			throw new System.NotImplementedException();
 		}
 
 		#region Backing Members

@@ -25,6 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="sample-data\full-config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Sample.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Sample.cs</LastGenOutput>

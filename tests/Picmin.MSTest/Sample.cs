@@ -20,6 +20,7 @@ namespace Acklann.Picmin
                 .First(x => x.Name.Equals(fileName, StringComparison.CurrentCultureIgnoreCase));
         }
 
+		public static FileInfo GetFullConfigJSON() => GetFile(@"full-config.json");
 		public static FileInfo GetImg1aGIF() => GetFile(@"img1A.gif");
 		public static FileInfo GetImg2BMP() => GetFile(@"img2.bmp");
 		public static FileInfo GetImg3GIF() => GetFile(@"img3.gif");
@@ -33,6 +34,7 @@ namespace Acklann.Picmin
 
 		public struct File
 		{
+			public const string FullConfigJSON = @"full-config.json";
 			public const string Img1aGIF = @"img1A.gif";
 			public const string Img2BMP = @"img2.bmp";
 			public const string Img3GIF = @"img3.gif";
