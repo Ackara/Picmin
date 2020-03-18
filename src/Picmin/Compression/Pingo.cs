@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Acklann.Picmin.Compression
 {
-    public class Pingo
+    public class Pingo : IPlugin
     {
         public static CompressionResult Compress(PingoOptions options)
         {
@@ -25,6 +25,12 @@ namespace Acklann.Picmin.Compression
                     string.Concat(executable.StandardError?.ReadToEnd(), "\r\n", executable.StandardOutput?.ReadToEnd()).Trim()
                     );
             }
+        }
+
+        
+        public void Run()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

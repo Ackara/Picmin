@@ -42,7 +42,7 @@ namespace Acklann.Picmin.Configuration
 
         private const string ROOT_JPATH = "$.images";
 
-        public static IEnumerable<object> Parse(string configurationFilePath, string jpath = default)
+        public static IEnumerable<object> Parse(string configurationFilePath, string jpath = default, string outputDirectory = default, string workingDirectory = default)
         {
             if (!File.Exists(configurationFilePath)) throw new FileNotFoundException($"Could not find file at '{configurationFilePath}'.");
 
@@ -64,10 +64,12 @@ namespace Acklann.Picmin.Configuration
         {
             if (configuration == null) throw new ArgumentNullException(nameof(configuration));
 
-            var f = configuration.GroupBy(x => (x as JObject)?.Property("name"));
-            foreach (var item in f)
+            foreach (var group in configuration.GroupBy(x => (x as JObject)?.Property("name")))
             {
-
+                foreach (JObject item in group)
+                {
+                    
+                }
             }
 
             throw new System.NotImplementedException();

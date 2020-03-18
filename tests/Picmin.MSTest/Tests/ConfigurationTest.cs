@@ -19,26 +19,27 @@ namespace Acklann.Picmin.Tests
 		[ClassInitialize]
 		public static void Setup(TestContext _)
 		{
-			ImagesDirectory = Path.Combine(Path.GetTempPath(), "picmin", "images");
-			if (Directory.Exists(ImagesDirectory)) Directory.Delete(ImagesDirectory, recursive: true);
+			OutputDirectory = Path.Combine(Path.GetTempPath(), "picmin", "images");
+			if (Directory.Exists(OutputDirectory)) Directory.Delete(OutputDirectory, recursive: true);
+			Directory.CreateDirectory(OutputDirectory);
 		}
 
 		[TestMethod]
 		public void Can_parse_batch_file()
 		{
 			// Arrange
-			var sampleImage = Sample.GetFullConfigJSON().FullName;
+			var configurationFile = Sample.GetFullConfigJSON().FullName;
 
 			// Act
-			
+			var result =  BatchConfiguration.Parse(configurationFile);
 
 
 			// Assert
-			throw new System.NotImplementedException();
+			result.ShouldNotBeEmpty();
 		}
 
 		#region Backing Members
-		private static string ImagesDirectory;
+		private static string OutputDirectory;
 		#endregion
 	}
 }

@@ -3,6 +3,7 @@
   [
     {
       "name": "all",
+      "root": true,
       "sourceFiles":
       [
         "*.png"
@@ -11,6 +12,29 @@
       {
         "quality": 80,
         "removeMetadata": true
+      }
+    },
+    {
+      "name": "all",
+      "sourceFiles":
+      [
+        "house.png"
+      ],
+      "compressor":
+      {
+        "quality": 50,
+        "removeMetadata": true
+      }
+    },
+    {
+      "sourceFiles":
+      [
+        "*.jpg"
+      ],
+      "compressor":
+      {
+        "quality": 75,
+        "removeMetadata": false
       }
     }
   ]
