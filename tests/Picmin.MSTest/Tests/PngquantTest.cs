@@ -55,7 +55,7 @@ namespace Acklann.Picmin.Tests
 
             yield return new object[]
             {
-                new PngquantOptions(imageFile, getOutFile("mid-quality"), 50, 50, 11)
+                new PngquantOptions(imageFile, getOutFile("mid-quality"), 50, 50, speed: 11)
             };
 
             yield return new object[]

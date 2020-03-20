@@ -1,8 +1,8 @@
 namespace Acklann.Picmin.Compression
 {
-    public readonly struct PingoOptions
+    public readonly struct PingoOptions : ICompressionOptions
     {
-        public PingoOptions(string sourceFile, string outputFile = default, int quality = 80, int speed = -1, bool removeMetadata = true)
+        public PingoOptions(string sourceFile, string outputFile = default, int quality = 80, bool removeMetadata = true, int speed = -1)
         {
             SourceFile = sourceFile;
             OutputFile = (outputFile ?? sourceFile.WithSuffix());

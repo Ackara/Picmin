@@ -1,8 +1,8 @@
 namespace Acklann.Picmin.Compression
 {
-    public readonly struct PngquantOptions
+    public readonly struct PngquantOptions : ICompressionOptions
     {
-        public PngquantOptions(string sourceFile, string outFile = default, int min = 65, int max = 80, int speed = 3, bool removeMetadata = true)
+        public PngquantOptions(string sourceFile, string outFile = default, int min = 65, int max = 80, bool removeMetadata = true, int speed = 3)
         {
             SourceFile = sourceFile;
             OutputFile = (outFile ?? sourceFile.WithSuffix());
@@ -23,6 +23,8 @@ namespace Acklann.Picmin.Compression
         public int Speed { get; }
 
         public bool RemoveMetadata { get; }
+
+        public int Quality { get => Min; }
 
         public override string ToString()
         {

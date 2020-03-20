@@ -93,10 +93,10 @@ namespace Acklann.Picmin
             if (string.IsNullOrEmpty(exe)) throw new ArgumentNullException(nameof(exe));
             if (string.IsNullOrEmpty(arguments)) throw new ArgumentNullException(nameof(arguments));
 
-            Process nodejs = CreateProcess(exe, arguments);
-            nodejs.Start();
-            nodejs.WaitForExit(300 * 1000);
-            return nodejs;
+            Process app = CreateProcess(exe, arguments);
+            app.Start();
+            app.WaitForExit(300 * 1000);
+            return app;
         }
 
         internal static Process InvokeExe(string name, string arguments, bool withSuffix = true)
@@ -106,10 +106,10 @@ namespace Acklann.Picmin
             string executable = Path.Combine(BaseDirectory, (withSuffix ? WithSuffix(name) : name));
             if (!File.Exists(executable)) throw new FileNotFoundException($"Could not find file at '{executable}'.");
 
-            Process exe = CreateProcess(executable, arguments);
-            exe.Start();
-            exe.WaitForExit(300 * 1000);
-            return exe;
+            Process app = CreateProcess(executable, arguments);
+            app.Start();
+            app.WaitForExit(300 * 1000);
+            return app;
         }
 
         #region Backing Members

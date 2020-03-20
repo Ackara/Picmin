@@ -31,7 +31,7 @@ namespace Acklann.Picmin.Tests
 			var configurationFile = Sample.GetFullConfigJSON().FullName;
 
 			// Act
-			var result =  BatchConfiguration.Parse(configurationFile);
+			var result =  Processor.Parse(configurationFile);
 
 
 			// Assert
