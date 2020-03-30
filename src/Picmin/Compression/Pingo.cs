@@ -5,7 +5,19 @@ namespace Acklann.Picmin.Compression
 {
     public class Pingo : IPlugin
     {
-        public static CompressionResult Compress(PingoOptions options)
+        public Pingo(PingoOptions options)
+        {
+            _options = options;
+        }
+
+        private readonly PingoOptions _options;
+
+        public string SourceFile
+        {
+            get => _options.SourceFile;
+        }
+
+        public static CompilerResult Compress(PingoOptions options)
         {
             if (!File.Exists(options.SourceFile)) throw new FileNotFoundException($"Could not find file at '{options.SourceFile}'.");
 
@@ -15,7 +27,7 @@ namespace Acklann.Picmin.Compression
 
             using (Process executable = Executor.InvokeExe("pingo.exe", options.ToString()))
             {
-                return new CompressionResult(
+                return new CompilerResult(
                     "pingo",
                     executable.ExitCode == 0,
                     options.SourceFile, options.OutputFile,
@@ -27,10 +39,6 @@ namespace Acklann.Picmin.Compression
             }
         }
 
-        
-        public void Run()
-        {
-            throw new System.NotImplementedException();
-        }
+        public CompilerResult Run() => Compress(_options);
     }
 }

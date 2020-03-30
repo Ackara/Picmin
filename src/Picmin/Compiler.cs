@@ -4,13 +4,12 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace Acklann.Picmin.Configuration
 {
-    public class Processor
+    public class Compiler
     {
-        public Processor()
+        public Compiler()
         {
         }
 
@@ -18,22 +17,13 @@ namespace Acklann.Picmin.Configuration
         {
             if (!File.Exists(configurationFilePath)) throw new FileNotFoundException($"Could not find file at '{configurationFilePath}'.");
 
-            foreach (var item in Parse(configurationFilePath, jpath))
+            foreach (IPlugin plugin in ReadFile(configurationFilePath, jpath))
             {
-                switch (item)
-                {
-                    case ICompressionOptions compressor:
-
-                        break;
-                }
+                CompilerResult result = plugin.Run();
             }
         }
 
-        #region Backing Members
-
-        private const string ROOT_JPATH = "$.images";
-
-        public static IEnumerable<object> Parse(string configurationFilePath, string jpath = default, string outputDirectory = default, string workingDirectory = default)
+        public static IEnumerable<IPlugin> ReadFile(string configurationFilePath, string jpath = default, string workingDirectory = default)
         {
             if (!File.Exists(configurationFilePath)) throw new FileNotFoundException($"Could not find file at '{configurationFilePath}'.");
 
@@ -47,9 +37,13 @@ namespace Acklann.Picmin.Configuration
                 else yield break;
             }
 
-            foreach (ICompressionOptions item in GetCompressionOptions(config, workingDirectory))
-                yield return item;
+            foreach (var item in GetCompressionOptions(config, workingDirectory))
+                yield return PluginFactory.CreateInstance(item);
         }
+
+        #region Backing Members
+
+        private const string ROOT_JPATH = "$.images";
 
         private static IEnumerable<ICompressionOptions> GetCompressionOptions(JArray configuration, string cwd)
         {
@@ -57,16 +51,12 @@ namespace Acklann.Picmin.Configuration
 
             var results = new Dictionary<string, ICompressionOptions>();
 
-            foreach (var group in configuration.GroupBy(x => (x as JObject)?.Property("name")))
+            foreach (JObject item in configuration)
             {
-                System.Diagnostics.Debug.WriteLine($"on group: {group.Key}");
-
-                foreach (JObject item in group)
+                foreach (string filePath in GetFileList(item, cwd))
                 {
-                    foreach (string filePath in GetFileList(item, cwd))
-                    {
-                        results[filePath] = CreateCompressionOptions(item, filePath);
-                    }
+                    results[filePath] = CreateCompressionOptions(item, filePath, cwd);
+                    System.Diagnostics.Debug.WriteLine(Path.GetFileName(filePath));
                 }
             }
 
@@ -75,7 +65,9 @@ namespace Acklann.Picmin.Configuration
 
         private static IEnumerable<string> GetFileList(JObject obj, string cwd)
         {
-            string[] sourceFiles = obj.Property(nameof(ICompressionOptions.SourceFile), StringComparison.InvariantCultureIgnoreCase)?.Value<string[]>();
+            IEnumerable<string> sourceFiles = obj.Property("sourceFiles", StringComparison.InvariantCultureIgnoreCase)?.Value?.Values<string>();
+            if (sourceFiles == null) yield break;
+
             foreach (Glob pattern in sourceFiles)
                 foreach (string filePath in pattern.ResolvePath(cwd))
                 {
@@ -83,21 +75,22 @@ namespace Acklann.Picmin.Configuration
                 }
         }
 
-        private static ICompressionOptions CreateCompressionOptions(JObject obj, string sourceFile)
+        private static ICompressionOptions CreateCompressionOptions(JObject obj, string sourceFile, string cwd)
         {
             if (obj == null) throw new ArgumentNullException(nameof(obj));
 
             var settings = (JObject)obj.Property("compressor", StringComparison.OrdinalIgnoreCase)?.Value;
-            int quality = (settings?.Property(nameof(ICompressionOptions.Quality), StringComparison.OrdinalIgnoreCase)?.Value<int>() ?? default);
-            bool removeMetadata = (settings?.Property(nameof(ICompressionOptions.RemoveMetadata), StringComparison.OrdinalIgnoreCase).Value<bool>() ?? default);
-            string suffix = (settings?.Property("suffix", StringComparison.OrdinalIgnoreCase).Value<string>() ?? ".min");
+            int quality = (settings?.Property(nameof(ICompressionOptions.Quality), StringComparison.OrdinalIgnoreCase)?.Value.Value<int>() ?? default);
+            bool removeMetadata = (settings?.Property(nameof(ICompressionOptions.RemoveMetadata), StringComparison.OrdinalIgnoreCase)?.Value?.Value<bool>() ?? default);
+            string suffix = (settings?.Property("suffix", StringComparison.OrdinalIgnoreCase)?.Value?.Value<string>() ?? ".min");
             string baseName = Path.GetFileNameWithoutExtension(sourceFile);
             string extension = Path.GetExtension(sourceFile);
 
-            string outputFolder = settings?.Property("outputDirectory", StringComparison.OrdinalIgnoreCase)?.Value<string>();
+            string outputFolder = settings?.Property("outputDirectory", StringComparison.OrdinalIgnoreCase)?.Value?.Value<string>();
             string outFile = (string.IsNullOrEmpty(outputFolder) ?
                 Path.Combine(Path.GetDirectoryName(sourceFile), string.Concat(baseName, suffix, extension)) :
-                Path.Combine(outputFolder, string.Concat(baseName, suffix, extension)));
+                Path.Combine(outputFolder.ExpandPath(cwd), string.Concat(baseName, suffix, extension)));
+            outFile = Environment.ExpandEnvironmentVariables(outFile);
 
             switch (Path.GetExtension(sourceFile).ToLowerInvariant())
             {

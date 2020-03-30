@@ -10,36 +10,38 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.IO;
 using Acklann.Picmin.Configuration;
+using Acklann.Picmin.Compression;
 
 namespace Acklann.Picmin.Tests
 {
-	[TestClass]
-	public class ConfigurationTest
-	{
-		[ClassInitialize]
-		public static void Setup(TestContext _)
-		{
-			OutputDirectory = Path.Combine(Path.GetTempPath(), "picmin", "images");
-			if (Directory.Exists(OutputDirectory)) Directory.Delete(OutputDirectory, recursive: true);
-			Directory.CreateDirectory(OutputDirectory);
-		}
+    [TestClass]
+    public class ConfigurationTest
+    {
+        [ClassInitialize]
+        public static void Setup(TestContext _)
+        {
+            OutputDirectory = Path.Combine(Path.GetTempPath(), "picmin", "images");
+            if (Directory.Exists(OutputDirectory)) Directory.Delete(OutputDirectory, recursive: true);
+            Directory.CreateDirectory(OutputDirectory);
+        }
 
-		[TestMethod]
-		public void Can_parse_batch_file()
-		{
-			// Arrange
-			var configurationFile = Sample.GetFullConfigJSON().FullName;
+        [TestMethod]
+        public void Can_read_configuration_file()
+        {
+            // Arrange
+            var configurationFile = Sample.GetFullConfigJSON().FullName;
 
-			// Act
-			var result =  Processor.Parse(configurationFile);
+            // Act
+            var result = Compiler.ReadFile(configurationFile).ToArray();
+            var plugin = result.First(x => Path.GetExtension(x.SourceFile) == ".png" && Path.GetFileName(x.SourceFile).StartsWith("img"));
 
+            // Assert
+            result.ShouldNotBeEmpty();
+            plugin.ShouldBeOfType<Pngquant>();
+        }
 
-			// Assert
-			result.ShouldNotBeEmpty();
-		}
-
-		#region Backing Members
-		private static string OutputDirectory;
-		#endregion
-	}
+        #region Backing Members
+        private static string OutputDirectory;
+        #endregion
+    }
 }

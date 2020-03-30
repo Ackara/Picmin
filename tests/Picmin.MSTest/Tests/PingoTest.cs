@@ -22,7 +22,7 @@ namespace Acklann.Picmin.Tests
         public void Can_compress_image_with_pingo(PingoOptions options)
         {
             // Act
-            CompressionResult result = Pingo.Compress(options);
+            CompilerResult result = Pingo.Compress(options);
 
             // Assert
             result.Success.ShouldBeTrue(result.Message);

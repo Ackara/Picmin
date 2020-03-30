@@ -5,7 +5,7 @@ namespace Acklann.Picmin.Compression
 {
     public class Svgo
     {
-        public static CompressionResult Compress(SvgoOptions options)
+        public static CompilerResult Compress(SvgoOptions options)
         {
             if (!File.Exists(options.SourceFile)) throw new FileNotFoundException($"Could not find file at '{options.SourceFile}'.");
 
@@ -14,7 +14,7 @@ namespace Acklann.Picmin.Compression
 
             using (Process script = Executor.Invoke("node", options.ToString()))
             {
-                return new CompressionResult(
+                return new CompilerResult(
                     "svgo",
                     script.ExitCode == 0,
                     options.SourceFile,

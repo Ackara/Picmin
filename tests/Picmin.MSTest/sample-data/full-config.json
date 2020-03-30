@@ -18,7 +18,7 @@
       "name": "all",
       "sourceFiles":
       [
-        "house.png"
+        "img*.png"
       ],
       "compressor":
       {

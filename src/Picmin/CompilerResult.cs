@@ -1,10 +1,10 @@
 using System;
 
-namespace Acklann.Picmin.Compression
+namespace Acklann.Picmin
 {
-    public readonly struct CompressionResult
+    public readonly struct CompilerResult
     {
-        public CompressionResult(string tool, bool success, string sourceFile, string outFile, long originalSize, long newSize, long ticks, string message = default)
+        public CompilerResult(string tool, bool success, string sourceFile, string outFile, long originalSize, long newSize, long ticks, string message = default)
         {
             Tool = tool;
             SourceFile = sourceFile;
