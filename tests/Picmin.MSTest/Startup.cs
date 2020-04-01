@@ -10,6 +10,7 @@ namespace Acklann.Picmin
     {
         public static void Configure(TestContext context)
         {
+            
         }
     }
 }

@@ -13,8 +13,7 @@ namespace Acklann.Picmin.Tests
         [ClassInitialize]
         public static void Cleanup(TestContext _)
         {
-            if (Directory.Exists(TempFolder)) Directory.Delete(TempFolder, recursive: true);
-            Directory.CreateDirectory(TempFolder);
+            Helper.CleanDirectory();
         }
 
         [DataTestMethod]
@@ -37,12 +36,10 @@ namespace Acklann.Picmin.Tests
 
         #region Backing Members
 
-        private static readonly string TempFolder = Path.Combine(Path.GetTempPath(), "picmin");
-
         private static IEnumerable<object[]> GetOptions()
         {
-            static string getOutFile(string x) => Path.Combine(TempFolder, $"pngquant-{x}.png");
-            var imageFile = Sample.GetImg5PNG().FullName;
+            static string getOutFile(string x) => Path.Combine(Helper.TempDirectory, $"pngquant-{x}.png");
+            var imageFile = Helper.CopyFile(Sample.GetImg5PNG().FullName);
 
             var sample1 = new PngquantOptions(imageFile);
             if (File.Exists(sample1.OutputFile)) File.Delete(sample1.OutputFile);

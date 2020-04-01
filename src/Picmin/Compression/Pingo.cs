@@ -3,14 +3,12 @@ using System.IO;
 
 namespace Acklann.Picmin.Compression
 {
-    public class Pingo : IPlugin
+    public class Pingo : ICommand
     {
         public Pingo(PingoOptions options)
         {
             _options = options;
         }
-
-        private readonly PingoOptions _options;
 
         public string SourceFile
         {
@@ -25,7 +23,7 @@ namespace Acklann.Picmin.Compression
             if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
             File.Copy(options.SourceFile, options.OutputFile, overwrite: true);
 
-            using (Process executable = Executor.InvokeExe("pingo.exe", options.ToString()))
+            using (Process executable = BootLoader.InvokeExe("pingo.exe", options.ToString()))
             {
                 return new CompilerResult(
                     "pingo",
@@ -40,5 +38,11 @@ namespace Acklann.Picmin.Compression
         }
 
         public CompilerResult Run() => Compress(_options);
+
+        #region Backing Members
+
+        private readonly PingoOptions _options;
+
+        #endregion Backing Members
     }
 }

@@ -3,15 +3,12 @@ using System.IO;
 
 namespace Acklann.Picmin.Compression
 {
-    public class Pngquant : IPlugin
+    public class Pngquant : ICommand
     {
         public Pngquant(PngquantOptions options)
         {
             _options = options;
         }
-
-        private readonly PngquantOptions _options;
-
 
         public string SourceFile
         {
@@ -25,7 +22,7 @@ namespace Acklann.Picmin.Compression
             string folder = Path.GetDirectoryName(options.OutputFile);
             if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
 
-            using (Process executable = Executor.InvokeExe("pngquant.exe", options.ToString()))
+            using (Process executable = BootLoader.InvokeExe("pngquant.exe", options.ToString()))
             {
                 return new CompilerResult(
                     "pngquant",
@@ -39,8 +36,12 @@ namespace Acklann.Picmin.Compression
             }
         }
 
-
-
         public CompilerResult Run() => Compress(_options);
+
+        #region Backing Members
+
+        private readonly PngquantOptions _options;
+
+        #endregion Backing Members
     }
 }

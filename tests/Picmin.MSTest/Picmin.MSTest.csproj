@@ -75,8 +75,4 @@
       <DependentUpon>Sample.tt</DependentUpon>
     </Compile>
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Tests\approved-folder\" />
-  </ItemGroup>
 </Project>

@@ -13,8 +13,7 @@ namespace Acklann.Picmin.Tests
         [ClassInitialize]
         public static void Cleanup(TestContext _)
         {
-            if (Directory.Exists(TempFolder)) Directory.Delete(TempFolder, recursive: true);
-            Directory.CreateDirectory(TempFolder);
+            Helper.CleanDirectory();
         }
 
         [DataTestMethod]
@@ -37,30 +36,30 @@ namespace Acklann.Picmin.Tests
 
         #region Backing Members
 
-        private static readonly string TempFolder = Path.Combine(Path.GetTempPath(), "picmin");
+        
 
         private static IEnumerable<object[]> GetPingoOptions()
         {
-            static string outFile(string x) => Path.Combine(TempFolder, $"pingo-{x}");
+            static string outFile(string x) => Path.Combine(Helper.TempDirectory, $"pingo-{x}");
 
             yield return new object[]
             {
-                new PingoOptions(Sample.GetImg10PNG().FullName)
+                new PingoOptions(Helper.CopyFile(Sample.GetImg10PNG().FullName))
             };
 
             yield return new object[]
             {
-                new PingoOptions(Sample.GetImg8JPG().FullName, outFile("metadata.jpg"), removeMetadata: false)
+                new PingoOptions(Helper.CopyFile(Sample.GetImg8JPG().FullName), outFile("metadata.jpg"), removeMetadata: false)
             };
 
             yield return new object[]
             {
-                new PingoOptions(Sample.GetImg9JPG().FullName, outFile("low.jpg"), 10)
+                new PingoOptions(Helper.CopyFile(Sample.GetImg9JPG().FullName), outFile("low.jpg"), 10)
             };
 
             yield return new object[]
             {
-                new PingoOptions(Sample.GetImg5PNG().FullName, outFile("high.png"), 100)
+                new PingoOptions(Helper.CopyFile(Sample.GetImg5PNG().FullName), outFile("high.png"), 100)
             };
         }
 

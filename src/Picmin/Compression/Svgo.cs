@@ -3,8 +3,18 @@ using System.IO;
 
 namespace Acklann.Picmin.Compression
 {
-    public class Svgo
+    public class Svgo : ICommand
     {
+        public Svgo(SvgoOptions options)
+        {
+            _options = options;
+        }
+
+        public string SourceFile
+        {
+            get => _options.SourceFile;
+        }
+
         public static CompilerResult Compress(SvgoOptions options)
         {
             if (!File.Exists(options.SourceFile)) throw new FileNotFoundException($"Could not find file at '{options.SourceFile}'.");
@@ -12,7 +22,7 @@ namespace Acklann.Picmin.Compression
             string folder = Path.GetDirectoryName(options.OutputFile);
             if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
 
-            using (Process script = Executor.Invoke("node", options.ToString()))
+            using (Process script = BootLoader.Invoke("node", options.ToString()))
             {
                 return new CompilerResult(
                     "svgo",
@@ -27,6 +37,12 @@ namespace Acklann.Picmin.Compression
             }
         }
 
+        public CompilerResult Run() => Compress(_options);
 
+        #region Backing Members
+
+        private readonly SvgoOptions _options;
+
+        #endregion Backing Members
     }
 }

@@ -1,16 +1,9 @@
-using FakeItEasy;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
-using Shouldly;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Text.RegularExpressions;
-using System.IO;
-using Acklann.Picmin.Configuration;
 using Acklann.Picmin.Compression;
+using Acklann.Picmin.Configuration;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Shouldly;
+using System.IO;
+using System.Linq;
 
 namespace Acklann.Picmin.Tests
 {
@@ -20,9 +13,7 @@ namespace Acklann.Picmin.Tests
         [ClassInitialize]
         public static void Setup(TestContext _)
         {
-            OutputDirectory = Path.Combine(Path.GetTempPath(), "picmin", "images");
-            if (Directory.Exists(OutputDirectory)) Directory.Delete(OutputDirectory, recursive: true);
-            Directory.CreateDirectory(OutputDirectory);
+            Helper.CleanDirectory();
         }
 
         [TestMethod]
@@ -33,15 +24,38 @@ namespace Acklann.Picmin.Tests
 
             // Act
             var result = Compiler.ReadFile(configurationFile).ToArray();
-            var plugin = result.First(x => Path.GetExtension(x.SourceFile) == ".png" && Path.GetFileName(x.SourceFile).StartsWith("img"));
+            var plugin = result.First(x => Path.GetExtension(x.SourceFile) == ".png");
 
             // Assert
             result.ShouldNotBeEmpty();
             plugin.ShouldBeOfType<Pngquant>();
         }
 
-        #region Backing Members
-        private static string OutputDirectory;
-        #endregion
+        [TestMethod]
+        public void Should_ignore_output_files_when_enumerating()
+        {
+            // Arrange
+            var configFile = Sample.GetFullConfigJSON().FullName;
+            var cwd = Path.Combine(Helper.TempDirectory, "enumerate");
+            string fname(string x, string suffix = ".min") => Path.Combine(cwd, string.Concat(Path.GetFileNameWithoutExtension(x), suffix, Path.GetExtension(x)));
+
+            if (Directory.Exists(cwd)) Directory.Delete(cwd, recursive: true);
+            Directory.CreateDirectory(cwd);
+
+            var sourceFiles = Directory.GetFiles(Sample.DirectoryPath, "*.png");
+
+            // Act
+            foreach (var item in sourceFiles)
+            {
+                File.Copy(item, fname(item, null), overwrite: true);
+                if (File.Exists(item)) File.Create(fname(item)).Dispose();
+            }
+
+            var result = Compiler.ReadFile(configFile, null, cwd).Select(x => x.SourceFile).ToArray();
+
+            // Assert
+            result.ShouldNotBeEmpty();
+            result.Length.ShouldBe(sourceFiles.Length);
+        }
     }
 }

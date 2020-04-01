@@ -8,11 +8,11 @@ namespace Acklann.Picmin
 {
     public delegate void ProgressHandler(string message, int progress, int max);
 
-    public static class Executor
+    public static class BootLoader
     {
-        static Executor()
+        static BootLoader()
         {
-            BaseDirectory = Path.Combine(AppContext.BaseDirectory, ('v' + typeof(Executor).Assembly.GetName().Version.ToString()));
+            BaseDirectory = Path.Combine(AppContext.BaseDirectory, ('v' + typeof(BootLoader).Assembly.GetName().Version.ToString()));
             if (!Directory.Exists(BaseDirectory)) Directory.CreateDirectory(BaseDirectory);
         }
 
@@ -44,7 +44,7 @@ namespace Acklann.Picmin
             string[] node_modlues = new string[] { "svgo@1.3.2" };
 
             // Unload embedded resources.
-            Assembly assembly = typeof(Executor).Assembly;
+            Assembly assembly = typeof(BootLoader).Assembly;
             string[] resources = assembly.GetManifestResourceNames();
             int progress = 0, max = (resources.Length + node_modlues.Length);
 

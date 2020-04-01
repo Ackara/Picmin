@@ -13,11 +13,10 @@ namespace Acklann.Picmin.Tests
         [ClassInitialize]
         public static void Cleanup(TestContext _)
         {
-            if (Directory.Exists(TempFolder)) Directory.Delete(TempFolder, recursive: true);
-            Directory.CreateDirectory(TempFolder);
+            Helper.CleanDirectory();
 
-            if (!Executor.CheckForSystemPrerequisites()) throw new System.Exception("NPM is not installed on this machine.");
-            Executor.InitializeComponents();
+            if (!BootLoader.CheckForSystemPrerequisites()) throw new System.Exception("NPM is not installed on this machine.");
+            BootLoader.InitializeComponents();
         }
 
         [DataTestMethod]
@@ -42,12 +41,10 @@ namespace Acklann.Picmin.Tests
 
         #region Backing Members
 
-        private static string TempFolder => Path.Combine(Path.GetTempPath(), "picmin", nameof(SvgoTest));
-
         private static IEnumerable<object[]> GetSvgoOptions()
         {
-            var imageFile = Sample.GetImg7SVG().FullName;
-            string outFile(string x) => Path.Combine(TempFolder, x);
+            var imageFile = Helper.CopyFile(Sample.GetImg7SVG().FullName);
+            string outFile(string x) => Path.Combine(Helper.TempDirectory, x);
 
             yield return new object[] { new SvgoOptions(imageFile) };
             yield return new object[] { new SvgoOptions(imageFile, outFile("with-metadata.svg"), removeMetadata: false) };

@@ -1,6 +1,6 @@
 namespace Acklann.Picmin
 {
-    public interface IPlugin
+    public interface ICommand
     {
         string SourceFile { get; }
 
