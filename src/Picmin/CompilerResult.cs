@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 
 namespace Acklann.Picmin
 {
@@ -31,5 +32,28 @@ namespace Acklann.Picmin
         public readonly bool Success;
 
         public readonly TimeSpan Elapse;
+
+        public string foo(string workingDirectory = default)
+        {
+            string srcFile = null, outFile = null;
+            if (!string.IsNullOrEmpty(workingDirectory))
+            {
+                srcFile = SourceFile?.Remove(0, workingDirectory.Length);
+                if (OuputFile?.StartsWith(workingDirectory, StringComparison.InvariantCultureIgnoreCase) ?? false)
+                    outFile = OuputFile.Remove(0, workingDirectory.Length);
+            }
+
+            if (Success)
+            {
+                return string.Format("{0}",
+                    Tool,
+                    srcFile,
+                    outFile);
+            }
+            else
+            {
+                return string.Format("");
+            }
+        }
     }
 }

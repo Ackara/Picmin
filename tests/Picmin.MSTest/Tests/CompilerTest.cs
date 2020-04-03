@@ -8,12 +8,18 @@ using System.Linq;
 namespace Acklann.Picmin.Tests
 {
     [TestClass]
-    public class ConfigurationTest
+    public class CompilerTest
     {
         [ClassInitialize]
         public static void Setup(TestContext _)
         {
             Helper.CleanDirectory();
+        }
+
+        [TestMethod]
+        public void MyTestMethod()
+        {
+
         }
 
         [TestMethod]
@@ -57,5 +63,6 @@ namespace Acklann.Picmin.Tests
             result.ShouldNotBeEmpty();
             result.Length.ShouldBe(sourceFiles.Length);
         }
+
     }
 }

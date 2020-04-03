@@ -16,10 +16,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".misc", ".misc", "{C9B7ADF0
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Picmin.VSIX", "src\Picmin.VSIX\Picmin.VSIX.csproj", "{28A8F51E-F530-424D-A5C2-58A2F54A6D9D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Picmin.Powershell", "src\Picmin.Powershell\Picmin.Powershell.csproj", "{2F8D744C-0AF6-472D-A138-03BBB77E2E95}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,14 +34,6 @@ Global
 		{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}.Release|Any CPU.Build.0 = Release|Any CPU
-		{28A8F51E-F530-424D-A5C2-58A2F54A6D9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{28A8F51E-F530-424D-A5C2-58A2F54A6D9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{28A8F51E-F530-424D-A5C2-58A2F54A6D9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{28A8F51E-F530-424D-A5C2-58A2F54A6D9D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2F8D744C-0AF6-472D-A138-03BBB77E2E95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2F8D744C-0AF6-472D-A138-03BBB77E2E95}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2F8D744C-0AF6-472D-A138-03BBB77E2E95}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2F8D744C-0AF6-472D-A138-03BBB77E2E95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
