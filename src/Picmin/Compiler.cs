@@ -10,10 +10,6 @@ namespace Acklann.Picmin.Configuration
 {
     public class Compiler
     {
-        public Compiler()
-        {
-        }
-
         public static IEnumerable<CompilerResult> Run(string configurationFilePath, string jpath = default)
         {
             if (!File.Exists(configurationFilePath)) throw new FileNotFoundException($"Could not find file at '{configurationFilePath}'.");

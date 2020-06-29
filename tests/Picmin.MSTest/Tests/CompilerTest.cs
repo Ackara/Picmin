@@ -17,12 +17,6 @@ namespace Acklann.Picmin.Tests
         }
 
         [TestMethod]
-        public void MyTestMethod()
-        {
-
-        }
-
-        [TestMethod]
         public void Can_read_configuration_file()
         {
             // Arrange
@@ -63,6 +57,5 @@ namespace Acklann.Picmin.Tests
             result.ShouldNotBeEmpty();
             result.Length.ShouldBe(sourceFiles.Length);
         }
-
     }
 }
